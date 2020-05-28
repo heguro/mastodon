@@ -90,6 +90,7 @@ class Status < ApplicationRecord
   scope :without_replies, -> { where('statuses.reply = FALSE OR statuses.in_reply_to_account_id = statuses.account_id') }
   scope :without_reblogs, -> { where('statuses.reblog_of_id IS NULL') }
   scope :with_public_visibility, -> { where(visibility: :public) }
+  scope :with_public_or_unlisted_visibility, -> { where(visibility: :public) }
   scope :tagged_with, ->(tag) { joins(:statuses_tags).where(statuses_tags: { tag_id: tag }) }
   scope :excluding_silenced_accounts, -> { left_outer_joins(:account).where(accounts: { silenced_at: nil }) }
   scope :including_silenced_accounts, -> { left_outer_joins(:account).where.not(accounts: { silenced_at: nil }) }
@@ -379,17 +380,15 @@ class Status < ApplicationRecord
     def timeline_scope(scope = false)
       starting_scope = case scope
                        when :local, true
-                        # LTL に入れたいトゥだけ .local する？
-                        # Status.local
-                        Status
+                        Status.local
                        when :remote
-                        Status
+                        Status.remote
                        else
                          Status
                        end
 
       starting_scope
-        .with_public_visibility
+        .with_public_or_unlisted_visibility
         .without_reblogs
     end
 
