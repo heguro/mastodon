@@ -379,9 +379,11 @@ class Status < ApplicationRecord
     def timeline_scope(scope = false)
       starting_scope = case scope
                        when :local, true
-                         Status.remote
+                        # LTL に入れたいトゥだけ .local する？
+                        # Status.local
+                        Status.null
                        when :remote
-                         Status.local
+                        Status.null
                        else
                          Status
                        end
