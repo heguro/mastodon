@@ -22,6 +22,6 @@ class FollowLimitValidator < ActiveModel::Validator
   private
 
   def limit_reached?(account)
-    account.following_count >= self.class.limit_for_account(account)
+    false
   end
 end
