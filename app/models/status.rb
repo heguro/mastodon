@@ -381,9 +381,9 @@ class Status < ApplicationRecord
                        when :local, true
                         # LTL に入れたいトゥだけ .local する？
                         # Status.local
-                        Status.null
+                        Status
                        when :remote
-                        Status.null
+                        Status
                        else
                          Status
                        end
