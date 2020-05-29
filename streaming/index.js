@@ -525,7 +525,7 @@ const startWorker = (workerId) => {
   });
 
   app.get('/api/v1/streaming/public', (req, res) => {
-    const onlyMedia = req.query.only_media === '1' || req.query.only_media === 'true';
+    const onlyMedia = true || req.query.only_media === '1' || req.query.only_media === 'true';
     const channel   = onlyMedia ? 'timeline:public:media' : 'timeline:public';
 
     streamFrom(channel, req, streamToHttp(req, res), streamHttpEnd(req), true);
@@ -604,10 +604,10 @@ const startWorker = (workerId) => {
       streamFrom(`timeline:${req.accountId}`, req, streamToWs(req, ws), streamWsEnd(req, ws), false, true);
       break;
     case 'public':
-      streamFrom('timeline:public:local', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
+      streamFrom('timeline:public:media', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
       break;
     case 'public:local':
-      streamFrom('timeline:public', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
+      streamFrom('timeline:public:local', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
       break;
     case 'public:remote':
       streamFrom('timeline:public:remote', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
