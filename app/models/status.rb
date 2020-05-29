@@ -382,7 +382,7 @@ class Status < ApplicationRecord
                        when :local, true
                         Status.local
                        when :remote
-                        Status.remote
+                        Status.none
                        else
                          Status
                        end
