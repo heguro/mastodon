@@ -137,7 +137,7 @@ class RemoveStatusService < BaseService
   end
 
   def remove_from_public
-    return unless @status.public_visibility?
+    return unless @status.distributable?
 
     redis.publish('timeline:public', @payload)
     if @status.local?
