@@ -384,7 +384,7 @@ class Status < ApplicationRecord
                        when :remote
                         Status.none
                        else
-                         Status
+                         Status.none
                        end
 
       starting_scope
