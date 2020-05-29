@@ -604,7 +604,7 @@ const startWorker = (workerId) => {
       streamFrom(`timeline:${req.accountId}`, req, streamToWs(req, ws), streamWsEnd(req, ws), false, true);
       break;
     case 'public':
-      streamFrom('timeline:public:media', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
+      streamFrom('timeline:public', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
       break;
     case 'public:local':
       streamFrom('timeline:public:local', req, streamToWs(req, ws), streamWsEnd(req, ws), true);
