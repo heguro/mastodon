@@ -525,7 +525,7 @@ const startWorker = (workerId) => {
   });
 
   app.get('/api/v1/streaming/public', (req, res) => {
-    const onlyMedia = true || req.query.only_media === '1' || req.query.only_media === 'true';
+    const onlyMedia = req.query.only_media === '1' || req.query.only_media === 'true';
     const channel   = onlyMedia ? 'timeline:public:media' : 'timeline:public';
 
     streamFrom(channel, req, streamToHttp(req, res), streamHttpEnd(req), true);
