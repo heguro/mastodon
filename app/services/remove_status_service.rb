@@ -143,7 +143,7 @@ class RemoveStatusService < BaseService
   end
 
   def remove_from_media
-    return unless @status.public_visibility?
+    return unless @status.distributable?
 
     redis.publish('timeline:public:media', @payload)
   end
