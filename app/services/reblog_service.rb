@@ -33,7 +33,7 @@ class ReblogService < BaseService
     DistributionWorker.perform_async(reblog.id)
     ActivityPub::DistributionWorker.perform_async(reblog.id)
 
-    create_notification(reblog)
+    # create_notification(reblog)
     bump_potential_friendship(account, reblog)
 
     reblog
@@ -44,11 +44,11 @@ class ReblogService < BaseService
   def create_notification(reblog)
     reblogged_status = reblog.reblog
 
-    #if reblogged_status.account.local?
-    #   LocalNotificationWorker.perform_async(reblogged_status.account_id, reblog.id, reblog.class.name)
-    #elsif reblogged_status.account.activitypub? && !reblogged_status.account.following?(reblog.account)
-    #  ActivityPub::DeliveryWorker.perform_async(build_json(reblog), reblog.account_id, reblogged_status.account.inbox_url)
-    #end
+    if reblogged_status.account.local?
+       LocalNotificationWorker.perform_async(reblogged_status.account_id, reblog.id, reblog.class.name)
+    elsif reblogged_status.account.activitypub? && !reblogged_status.account.following?(reblog.account)
+      ActivityPub::DeliveryWorker.perform_async(build_json(reblog), reblog.account_id, reblogged_status.account.inbox_url)
+    end
   end
 
   def bump_potential_friendship(account, reblog)
