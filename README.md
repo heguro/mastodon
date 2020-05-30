@@ -1,6 +1,6 @@
 # mstdn-timeline-server
 
-Original fork of [Mastodon](https://github.com/tootsuite/mastodon).
+Original fork of [Mastodon](https://github.com/tootsuite/mastodon)
 
 ## License
 
