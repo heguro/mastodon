@@ -42,6 +42,10 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     process_tags
     process_audience
 
+    Rails.logger.notice @params.keys.join(',')
+
+    return reject_payload! if !has_collect_visibility? && !has_mention_to_local_account?
+
     ApplicationRecord.transaction do
       @status = Status.create!(@params)
       attach_tags(@status)
@@ -52,6 +56,16 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     check_for_spam
     distribute(@status)
     forward_for_reply if @status.distributable?
+  end
+
+  def has_mention_to_local_account?
+    # @params['']
+    true
+  end
+
+  def has_collect_visibility_for_followed_account?
+    # @params['']
+    true
   end
 
   def find_existing_status

@@ -12,6 +12,7 @@ TLSVR_FOLLOWBOT0=[@0's account id]
 TLSVR_FOLLOWBOT1=[@1's account id]
 TLSVR_FOLLOWBOT2=[@2's account id]
 TLSVR_FOLLOWBOT3=[@3's account id]
+TLSVR_HASHTAG=[hashtag without #]
 ```
 
 Example:
@@ -22,6 +23,7 @@ TLSVR_FOLLOWBOT0=2
 TLSVR_FOLLOWBOT1=3
 TLSVR_FOLLOWBOT2=4
 TLSVR_FOLLOWBOT3=5
+TLSVR_HASHTAG=jptl
 ```
 
 ## License
