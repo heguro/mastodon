@@ -1,6 +1,28 @@
 # mstdn-timeline-server
 
-Original fork of [Mastodon](https://github.com/tootsuite/mastodon)
+A fork of [Mastodon](https://github.com/tootsuite/mastodon)
+
+## Configure
+
+After installation, add these lines to `.env.production`:
+
+```plain
+GITHUB_REPOSITORY=[github repo]
+FOLLOWBOT0=[@0's account id]
+FOLLOWBOT1=[@1's account id]
+FOLLOWBOT2=[@2's account id]
+FOLLOWBOT3=[@3's account id]
+```
+
+Example:
+
+```plain
+GITHUB_REPOSITORY=heguro/mstdn-timeline-server
+FOLLOWBOT0=2
+FOLLOWBOT1=3
+FOLLOWBOT2=4
+FOLLOWBOT3=5
+```
 
 ## License
 
