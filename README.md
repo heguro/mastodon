@@ -8,20 +8,20 @@ After installation, add these lines to `.env.production`:
 
 ```plain
 GITHUB_REPOSITORY=[github repo]
-FOLLOWBOT0=[@0's account id]
-FOLLOWBOT1=[@1's account id]
-FOLLOWBOT2=[@2's account id]
-FOLLOWBOT3=[@3's account id]
+TLSVR_FOLLOWBOT0=[@0's account id]
+TLSVR_FOLLOWBOT1=[@1's account id]
+TLSVR_FOLLOWBOT2=[@2's account id]
+TLSVR_FOLLOWBOT3=[@3's account id]
 ```
 
 Example:
 
 ```plain
 GITHUB_REPOSITORY=heguro/mstdn-timeline-server
-FOLLOWBOT0=2
-FOLLOWBOT1=3
-FOLLOWBOT2=4
-FOLLOWBOT3=5
+TLSVR_FOLLOWBOT0=2
+TLSVR_FOLLOWBOT1=3
+TLSVR_FOLLOWBOT2=4
+TLSVR_FOLLOWBOT3=5
 ```
 
 ## License
