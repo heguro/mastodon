@@ -44,7 +44,7 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
 
     Rails.logger.info @params.keys.join(',')
 
-    # return reject_payload! if !has_collect_visibility? && !has_mention_to_local_account?
+    return reject_payload! if !has_collect_visibility? && !has_mention_to_local_account?
 
     ApplicationRecord.transaction do
       @status = Status.create!(@params)
@@ -63,7 +63,7 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     true
   end
 
-  def has_collect_visibility_for_followed_account?
+  def has_collect_visibility?
     # @params['']
     true
   end
