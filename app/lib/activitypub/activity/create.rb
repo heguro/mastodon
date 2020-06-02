@@ -42,7 +42,7 @@ class ActivityPub::Activity::Create < ActivityPub::Activity
     process_tags
     process_audience
 
-    Rails.logger.notice @params.keys.join(',')
+    Rails.logger.info @params.keys.join(',')
 
     return reject_payload! if !has_collect_visibility? && !has_mention_to_local_account?
 

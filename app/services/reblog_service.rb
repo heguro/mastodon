@@ -33,6 +33,8 @@ class ReblogService < BaseService
     DistributionWorker.perform_async(reblog.id)
     ActivityPub::DistributionWorker.perform_async(reblog.id)
 
+    Rails.logger.info "Boosted"
+
     # create_notification(reblog)
     bump_potential_friendship(account, reblog)
 

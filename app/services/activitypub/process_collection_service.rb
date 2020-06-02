@@ -10,7 +10,8 @@ class ActivityPub::ProcessCollectionService < BaseService
 
     return if !supported_context? || (different_actor? && verify_account!.nil?) || @account.suspended? || @account.local?
 
-    Rails.logger.notice body
+    Rails.logger.info "Called ProcessCollectionService"
+    Rails.logger.info body
 
     case @json['type']
     when 'Collection', 'CollectionPage'
