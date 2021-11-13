@@ -70,11 +70,13 @@ module Mastodon
         s3_permissions     = Paperclip::Attachment.default_options[:s3_permissions]
         bucket             = s3_interface.bucket(Paperclip::Attachment.default_options[:s3_credentials][:bucket])
         last_key           = options[:start_after]
+        s3_custom_prefix   = ENV.fetch('S3_PREFIX', '')
+        s3_prefix          = "#{s3_custom_prefix}#{prefix}"
 
         loop do
           objects = begin
             begin
-              bucket.objects(start_after: last_key, prefix: prefix).limit(1000).map { |x| x }
+              bucket.objects(start_after: last_key, prefix: s3_prefix).limit(1000).map { |x| x }
             rescue => e
               progress.log(pastel.red("Error fetching list of files: #{e}"))
               progress.log("If you want to continue from this point, add --start-after=#{last_key} to your command") if last_key
@@ -90,7 +92,7 @@ module Mastodon
           objects.each do |object|
             object.acl.put(acl: s3_permissions) if options[:fix_permissions] && !options[:dry_run]
 
-            path_segments = object.key.split('/')
+            path_segments = object.key.delete_prefix(s3_custom_prefix).split('/')
             path_segments.delete('cache')
 
             unless [7, 10].include?(path_segments.size)
