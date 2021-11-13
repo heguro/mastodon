@@ -39,8 +39,14 @@ if ENV['S3_ENABLED'] == 'true'
   s3_region   = ENV.fetch('S3_REGION')   { 'us-east-1' }
   s3_protocol = ENV.fetch('S3_PROTOCOL') { 'https' }
   s3_hostname = ENV.fetch('S3_HOSTNAME') { "s3-#{s3_region}.amazonaws.com" }
+  s3_prefix   = ENV.fetch('S3_PREFIX')   { '' }
+
+  Paperclip.interpolates :custom_prefix do |attachment, style|
+    s3_prefix
+  end
 
   Paperclip::Attachment.default_options.merge!(
+    path: ':custom_prefix:prefix_url:class/:attachment/:id_partition/:style/:filename',
     storage: :s3,
     s3_protocol: s3_protocol,
     s3_host_name: s3_hostname,
@@ -80,7 +86,8 @@ if ENV['S3_ENABLED'] == 'true'
   if ENV.has_key?('S3_ALIAS_HOST') || ENV.has_key?('S3_CLOUDFRONT_HOST')
     Paperclip::Attachment.default_options.merge!(
       url: ':s3_alias_url',
-      s3_host_alias: ENV['S3_ALIAS_HOST'] || ENV['S3_CLOUDFRONT_HOST']
+      s3_host_alias: ENV['S3_ALIAS_HOST'] || ENV['S3_CLOUDFRONT_HOST'],
+      s3_prefixes_in_alias: ENV.fetch('S3_ALIAS_REMOVE_PREFIX'){ '0' }.to_i
     )
   end
 elsif ENV['SWIFT_ENABLED'] == 'true'
