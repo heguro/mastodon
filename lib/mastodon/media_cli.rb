@@ -106,6 +106,7 @@ module Mastodon
             file_name       = path_segments.last
             record          = record_map.dig(model_name, record_id)
             attachment      = record&.public_send(attachment_name)
+            progress.log("model: #{model_name}, record_id: #{record_id}, filename: #{file_name}")
 
             progress.increment
 
