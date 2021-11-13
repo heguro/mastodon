@@ -27,13 +27,9 @@ Paperclip.interpolates :prefix_url do |attachment, style|
   end
 end
 
-Paperclip.interpolates :custom_prefix do |attachment, style|
-  ENV.fetch('S3_PREFIX') { '' }
-end
-
 Paperclip::Attachment.default_options.merge!(
   use_timestamp: false,
-  path: ':custom_prefix:prefix_url:class/:attachment/:id_partition/:style/:filename',
+  path: ':prefix_url:class/:attachment/:id_partition/:style/:filename',
   storage: :fog
 )
 
@@ -43,8 +39,14 @@ if ENV['S3_ENABLED'] == 'true'
   s3_region   = ENV.fetch('S3_REGION')   { 'us-east-1' }
   s3_protocol = ENV.fetch('S3_PROTOCOL') { 'https' }
   s3_hostname = ENV.fetch('S3_HOSTNAME') { "s3-#{s3_region}.amazonaws.com" }
+  s3_prefix   = ENV.fetch('S3_PREFIX')   { '' }
+
+  Paperclip.interpolates :custom_prefix do |attachment, style|
+    s3_prefix
+  end
 
   Paperclip::Attachment.default_options.merge!(
+    path: ':custom_prefix:prefix_url:class/:attachment/:id_partition/:style/:filename',
     storage: :s3,
     s3_protocol: s3_protocol,
     s3_host_name: s3_hostname,
