@@ -87,7 +87,7 @@ module Mastodon
           break if objects.empty?
 
           last_key   = objects.last.key
-          record_map = preload_records_from_mixed_objects(objects)
+          record_map = preload_records_from_mixed_objects(objects, s3_custom_prefix)
 
           objects.each do |object|
             object.acl.put(acl: s3_permissions) if options[:fix_permissions] && !options[:dry_run]
@@ -311,11 +311,11 @@ module Mastodon
       SiteUpload
     ).freeze
 
-    def preload_records_from_mixed_objects(objects)
+    def preload_records_from_mixed_objects(objects, prefix)
       preload_map = Hash.new { |hash, key| hash[key] = [] }
 
       objects.map do |object|
-        segments = object.key.split('/')
+        segments = object.key.delete_prefix(prefix).split('/')
         segments.delete('cache')
 
         next unless [7, 10].include?(segments.size)
